@@ -1,5 +1,6 @@
 const fs = require('fs');
 const geoip = require('geoip-lite');
+const request = require('request');
 
 class proxyService {
 
@@ -14,6 +15,23 @@ class proxyService {
         this.proxyList = [];
         this.currentPosition = 0;
         this.debug = debug;
+    }
+
+    /**
+     * Pulls the latest public, free proxy lists into the CretonJS client.
+     *
+     * This will write them to disk in a local file called `proxies.txt`
+     */
+    getLatestProxyLists() {
+        request.get('https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt', this.addProxiesToLocalList);
+    }
+
+
+    addProxiesToLocalList(error, response, body) {
+        if (!error) {
+            let proxyList = body.split('\n');
+            console.log(proxyList);
+        }
     }
 
     loadProxyList(proxyListPath) {
