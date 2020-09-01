@@ -38,10 +38,14 @@ let HTTPService = new creton.httpService(HTTPProxyAddressToUse);
 ### Filtering Proxies
 When it comes to filtering proxies, you have three levels of control: Region, Country, City.
 
-The filtering is done via passing a simple JSON object into the `Creton` class upon instantiation.
+The filtering is done via passing a simple config JSON object into the `Creton` class upon instantiation.
 
 Note: Country and Region codes follow [ISO 3166](https://www.iso.org/iso-3166-country-codes.html) , you can search through the codes [here](https://www.iso.org/obp/ui/#search)
 ```js
 let proxyFilter = {"country": "FR"}
+
+let creton = new Creton({
+    proxyFilter: proxyFilter
+});
 ```
 
