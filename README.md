@@ -74,7 +74,6 @@ This is all handled behind the scenes, however you can see the output of this by
 To gain extra visbility into what is occuring within Creton, you can simply add a `debug:true` flag whenever you are instantiating a new class.
 
 ```js
-
 const Creton = require('cretonjs');
 
 let creton = new Creton({
@@ -85,7 +84,6 @@ let creton = new Creton({
 let HTTPProxyAddressToUse = creton.proxy.fetchNextProxy().address;
 
 let HTTPService = new creton.httpService(HTTPProxyAddressToUse, true); // Debug:true flag
-
 ```
 
 ### Examples
