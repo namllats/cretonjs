@@ -17,7 +17,7 @@ In the future this framework will support:
 
 ## Usage
 ### Installation
-TODO: CREATE NPM MODULE
+`npm install cretonjs --save`
 
 ### Loading the proxy lists
 To Initialize Creton, you'll need to include the module in a file, and create a new instance of the Creton class to pull down the latest proxy lists.
