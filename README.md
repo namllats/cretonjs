@@ -19,9 +19,9 @@ In the future this framework will support:
 TODO: NPM INSTALL
 
 ### Getting Started
-To Initialize Creton, all that you'll need to do is require the module, and create a new instance of the class.
+To Initialize Creton, you'll need to include the module in a file, and create a new instance of the Creton class.
 ```js
-const Creton = require('creton');
+const Creton = require('cretonjs');
 
 let creton = new Creton();
 
