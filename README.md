@@ -24,6 +24,24 @@ To Initialize Creton, you'll need to include the module in a file, and create a 
 const Creton = require('cretonjs');
 
 let creton = new Creton();
-
-let HTTPService = new creton.httpService(creton.proxy.fetchNextProxy().address);
 ```
+
+To create a new HTTP client using the proxy and HTTP library provided by Creton, you'll need to create a new instance of the Creton HTTPService class,
+with the next HTTP Proxy address as a parameter passed through to the `constructor()`. This gives you the ability to pass your own HTTP proxies in as well as using
+the in built proxying mechanisms that Creton provides. 
+```js
+let HTTPProxyAddressToUse = creton.proxy.fetchNextProxy().address;
+
+let HTTPService = new creton.httpService(HTTPProxyAddressToUse);
+```
+
+### Filtering Proxies
+When it comes to filtering proxies, you have three levels of control: Region, Country, City.
+
+The filtering is done via passing a simple JSON object into the `Creton` class upon instantiation.
+
+Note: Country and Region codes follow [ISO 3166](https://www.iso.org/iso-3166-country-codes.html) , you can search through the codes [here](https://www.iso.org/obp/ui/#search)
+```js
+let proxyFilter = {"country": "FR"}
+```
+
