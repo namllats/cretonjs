@@ -5,7 +5,7 @@ This framework will enable you to create a location aware HTTP client that has t
 
 Currently, the framework supports:
 
-- Location filtering on proxy nodes e.g. Region -> Country -> City
+- Location filtering on proxy nodes e.g. `Region -> Country -> City`
 - HTTP Header randomization e.g. random ordering of all headers, random content of User-Agent and Accept-Language
 
 In the future this framework will support:
