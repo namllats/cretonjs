@@ -68,7 +68,7 @@ Currently, Creton will handle the generation of `random` HTTP headers. This incl
 - Randomization of the `accept-language` header with the top 10 common variants
 - Randomization of the HTTP Header ordering, to avoid HTTP based fingerprinting.
 
-This is all handled behind the scenes, however you can see the output of this by enabling the `debug` flags on the HTTPService
+This is all handled behind the scenes, however you can see the output of this by enabling the `debug` flags on your Creton instance.
 
 ### Debug logging
 To gain extra visbility into what is occuring within Creton, you can simply add a `debug:true` flag whenever you are instantiating a new class.
