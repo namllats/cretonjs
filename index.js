@@ -6,7 +6,11 @@ class creton {
     constructor(config, debug) {
         // Init proxy service
         this.proxy = new proxyService(config.proxyFilters, debug);
-        this.proxy.loadProxyList(config.proxyListPath);
+        
+        // Do not perform this if flag is false. This occurs on init run to collect local proxies
+        if (config.loadProxies !== false) {
+            this.proxy.loadProxyList(config.proxyListPath);
+        }
 
         // Init http service as client
         this.httpClient = httpService;

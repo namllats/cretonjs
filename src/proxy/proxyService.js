@@ -24,13 +24,25 @@ class proxyService {
      */
     getLatestProxyLists() {
         request.get('https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt', this.addProxiesToLocalList);
+        request.get('https://api.proxyscrape.com/?request=getproxies&proxytype=http&timeout=10000&ssl=yes', this.addProxiesToLocalList);
+        request.get('https://www.proxy-list.download/api/v1/get?type=https&anon=elite', this.addProxiesToLocalList);
     }
 
 
     addProxiesToLocalList(error, response, body) {
         if (!error) {
-            let proxyList = body.split('\n');
-            console.log(proxyList);
+            let proxyList = body.replace(/\r/g, '').split('\n');
+
+            let proxyFilePath = __dirname + '/proxies.txt';
+            if (!fs.existsSync(proxyFilePath)) {
+                fs.closeSync(fs.openSync(proxyFilePath, 'w'));
+            }
+
+            for (let item in proxyList) {
+                if ((proxyList[item].match(/\./g) || []).length === 3) {
+                    fs.appendFileSync(proxyFilePath, proxyList[item] + '\n');
+                }
+            }
         }
     }
 
