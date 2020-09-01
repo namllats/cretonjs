@@ -1,0 +1,30 @@
+{
+  "name": "cretonjs",
+  "version": "1.0.0",
+  "description": "CretonJS is a HTTP abstraction layer for creating custom scripts and bots to test the sophistication of defences when pen testing or red teaming.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bot",
+    "http",
+    "script",
+    "proxy",
+    "security",
+    "tool",
+    "advanced",
+    "attack",
+    "robot",
+    "hacking",
+    "red team"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "geoip-lite": "^1.3.2",
+    "https-proxy-agent": "^5.0.0",
+    "promise": "^8.1.0",
+    "request": "^2.88.2"
+  }
+}
