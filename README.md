@@ -10,8 +10,7 @@ Currently, the framework supports:
 
 In the future this framework will support:
 
-- Automatic proxy network updating, using public sources.
-- Automatic validation that the proxies do in fact work (Currently they must be pre vetted)
+- Automatic validation that the proxies do in fact work (Currently they are assumed to be working)
 - "Smokescreen" functionality to create erroneous SOC alerts. e.g. Large volumes of requests from IPs outside of the target GEO, using static UA's and headers.
 
 ## Usage
