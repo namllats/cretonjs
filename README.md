@@ -6,11 +6,11 @@ This framework will enable you to create a location aware HTTP client that has t
 Currently, the framework supports:
 
 - Location filtering on proxy nodes e.g. `Region -> Country -> City`
+- Automatic proxy rotation
 - HTTP Header randomization e.g. random ordering of all headers, random content of User-Agent and Accept-Language
 
 In the future this framework will support:
 
-- Automatic switching to next proxy in chain
 - Automatic validation that the proxies do in fact work (Currently they are assumed to be working)
 - "Smokescreen" functionality to create erroneous SOC alerts. e.g. Large volumes of requests from IPs outside of the target GEO, using static UA's and headers.
 - Support for Luminati and other paid proxy services
