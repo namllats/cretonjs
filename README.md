@@ -1,5 +1,5 @@
-#CretonJS
-###Overview
+# CretonJS
+### Overview
 CretonJS is a HTTP abstraction layer for creating a sophisticated non browser based HTTP bot.
 This framework will enable you to create a location aware bot that has the ability to mimic legitimate human behaviour / traffic.
 
@@ -14,11 +14,11 @@ In the future this framework will support:
 - Automatic validation that the proxies do in fact work (Currently they must be pre vetted)
 - "Smokescreen" functionality to create erroneous SOC alerts. e.g. Large volumes of requests from IPs outside of the target GEO, using static UA's and headers.
 
-##Usage
-###Installation
+## Usage
+### Installation
 TODO: NPM INSTALL
 
-###Getting Started
+### Getting Started
 To Initialize Creton, all that you'll need to do is require the module, and create a new instance of the class.
 ```js
 const Creton = require('creton');
