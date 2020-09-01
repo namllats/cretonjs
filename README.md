@@ -78,8 +78,9 @@ To gain extra visbility into what is occuring within Creton, you can simply add 
 const Creton = require('cretonjs');
 
 let creton = new Creton({
-    proxyFilter: proxyFilter
-}, true); // Debug:true flag
+    proxyFilter: proxyFilter,
+    debug: true // Debug:true flag
+}); 
 
 let HTTPProxyAddressToUse = creton.proxy.fetchNextProxy().address;
 

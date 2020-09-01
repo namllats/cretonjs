@@ -7,8 +7,9 @@
 const Creton = require('../index');
 
 let creton = new Creton({
-    proxyFilters: {"country": "CA"}
-}, true);
+    proxyFilters: {"country": "CA"},
+    debug: true
+});
 
 
 let httpClient = new creton.httpClient(creton.proxy.fetchNextProxy().address, true);
