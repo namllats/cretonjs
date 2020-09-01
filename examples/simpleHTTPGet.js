@@ -4,7 +4,7 @@
  * In this case, we will target a website with GET requests from Canada based IPs to confirm that they do in fact work.
  */
 
-const Creton = require('./index');
+const Creton = require('../index');
 
 let creton = new Creton({
     proxyFilters: {"country": "CA"}
