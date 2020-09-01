@@ -20,7 +20,7 @@ class proxyService {
     /**
      * Pulls the latest public, free proxy lists into the CretonJS client.
      *
-     * This will write them to disk in a local file called `proxies.txt`
+     * This will write them to disk in a local file called `proxies.txt`. Currently uses three public proxy sources... This will be expanded in the future.
      */
     getLatestProxyLists() {
         request.get('https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt', this.addProxiesToLocalList);
@@ -32,14 +32,18 @@ class proxyService {
     addProxiesToLocalList(error, response, body) {
         if (!error) {
             let proxyList = body.replace(/\r/g, '').split('\n');
+            let currentLocalProxyList;
 
             let proxyFilePath = __dirname + '/proxies.txt';
             if (!fs.existsSync(proxyFilePath)) {
                 fs.closeSync(fs.openSync(proxyFilePath, 'w'));
+                currentLocalProxyList = '';
+            } else {
+                currentLocalProxyList = fs.readFileSync(proxyFilePath).toString();
             }
 
             for (let item in proxyList) {
-                if ((proxyList[item].match(/\./g) || []).length === 3) {
+                if ((proxyList[item].match(/\./g) || []).length === 3 && (currentLocalProxyList.indexOf(proxyList[item]) === -1)) {
                     fs.appendFileSync(proxyFilePath, proxyList[item] + '\n');
                 }
             }
