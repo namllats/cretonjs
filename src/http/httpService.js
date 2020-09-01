@@ -65,6 +65,7 @@ class httpService {
             });
         }
         this.debugStatement('generateRandomHTTPHeaders', 'Headers randomized');
+        this.debugStatement('generateRandomHTTPHeaders', 'Header Values: ' + JSON.stringify(newHeaderObject));
         return newHeaderObject;
 
     }

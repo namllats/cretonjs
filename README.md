@@ -85,3 +85,6 @@ let HTTPProxyAddressToUse = creton.proxy.fetchNextProxy().address;
 let HTTPService = new creton.httpService(HTTPProxyAddressToUse, true); // Debug:true flag
 
 ```
+
+### Examples
+See `/examples` for example code. This will be added to in order to be more comprehensive.
