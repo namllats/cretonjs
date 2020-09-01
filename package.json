@@ -19,7 +19,7 @@
     "hacking",
     "red team"
   ],
-  "author": "",
+  "author": "namllats",
   "license": "ISC",
   "dependencies": {
     "geoip-lite": "^1.3.2",
