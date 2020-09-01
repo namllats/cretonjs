@@ -61,3 +61,27 @@ let creton = new Creton({
 });
 ```
 
+### Header randomization
+Currently, Creton will handle the generation of `random` HTTP headers. This includes:
+- Randomization of the `user-agent` header with strings from mobile devices and desktops
+- Randomization of the `accept-language` header with the top 10 common variants
+- Randomization of the HTTP Header ordering, to avoid HTTP based fingerprinting.
+
+This is all handled behind the scenes, however you can see the output of this by enabling the `debug` flags on the HTTPService
+
+### Debug logging
+To gain extra visbility into what is occuring within Creton, you can simply add a `debug:true` flag whenever you are instantiating a new class.
+
+```js
+
+const Creton = require('cretonjs');
+
+let creton = new Creton({
+    proxyFilter: proxyFilter
+}, true); // Debug:true flag
+
+let HTTPProxyAddressToUse = creton.proxy.fetchNextProxy().address;
+
+let HTTPService = new creton.httpService(HTTPProxyAddressToUse, true); // Debug:true flag
+
+```
