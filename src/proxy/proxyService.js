@@ -23,6 +23,7 @@ class proxyService {
      * This will write them to disk in a local file called `proxies.txt`. Currently uses three public proxy sources... This will be expanded in the future.
      */
     getLatestProxyLists() {
+        this.debugStatement('getLatestProxyLists', 'Fetching new lists.');
         request.get('https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt', this.addProxiesToLocalList);
         request.get('https://api.proxyscrape.com/?request=getproxies&proxytype=http&timeout=10000&ssl=yes', this.addProxiesToLocalList);
         request.get('https://www.proxy-list.download/api/v1/get?type=https&anon=elite', this.addProxiesToLocalList);

@@ -6,6 +6,6 @@
 
 const Creton = require('../index');
 
-let creton = new Creton({loadProxies: false}, false);
+let creton = new Creton({loadProxies: false}, true);
 
 creton.proxy.getLatestProxyLists();
