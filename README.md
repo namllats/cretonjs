@@ -16,7 +16,7 @@ In the future this framework will support:
 
 ## Usage
 ### Installation
-TODO: NPM INSTALL
+TODO: CREATE NPM MODULE
 
 ### Getting Started
 To Initialize Creton, you'll need to include the module in a file, and create a new instance of the Creton class.
