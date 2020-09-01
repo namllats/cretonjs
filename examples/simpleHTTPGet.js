@@ -12,7 +12,7 @@ let creton = new Creton({
 });
 
 
-let httpClient = new creton.httpClient(creton.proxy.fetchNextProxy().address, true);
+let httpClient = creton.createNewHTTPClient();
 
 httpClient.setOptionsForNextRequest("https://api.my-ip.io/ip.json", "GET");
 

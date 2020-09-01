@@ -41,12 +41,11 @@ let creton = new Creton();
 
 To create a new HTTP client using the proxy and HTTP library provided by Creton, you'll need to create a new instance of the Creton HTTPService class.
 
-The next HTTP Proxy address will then need to be pass as a parameter through to the `constructor()`. This gives you the ability to pass your own HTTP proxies in as well as using
-the in built proxying mechanisms that Creton provides. 
+By default, your Creton instance will select the next proxy in the chain to use for the new HTTP client.
+If you wish to use your own proxy, you can provide the IP and port as a string when calling the `createNewHTTPClient` function.
 ```js
-let HTTPProxyAddressToUse = creton.proxy.fetchNextProxy().address;
-
-let HTTPService = new creton.httpService(HTTPProxyAddressToUse);
+let HTTPService = creton.createNewHTTPClient(); // Will load the next proxy in the chain
+let HTTPService = creton.createNewHTTPClient('127.0.0.1:8080'); // Will use the provided proxy
 ```
 
 ### Filtering Proxies
@@ -82,9 +81,7 @@ let creton = new Creton({
     debug: true // Debug:true flag
 }); 
 
-let HTTPProxyAddressToUse = creton.proxy.fetchNextProxy().address;
-
-let HTTPService = new creton.httpService(HTTPProxyAddressToUse, true); // Debug:true flag
+let HTTPService = creton.createNewHTTPClient();
 ```
 
 ### Examples

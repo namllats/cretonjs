@@ -4,6 +4,8 @@ const proxyService = require('./src/proxy/proxyService');
 
 class creton {
     constructor(config) {
+        // Init config
+        this.config = config;
         // Init proxy service
         this.proxy = new proxyService(config.proxyFilters, config.debug);
 
@@ -14,6 +16,12 @@ class creton {
 
         // Init http service as client
         this.httpClient = httpService;
+    }
+
+    createNewHTTPClient(customProxyAddress) {
+        let nextProxyAddress = customProxyAddress === undefined ? this.proxy.fetchNextProxy().address : customProxyAddress;
+
+        return new this.httpClient(nextProxyAddress, this.config.debug);
     }
 }
 
