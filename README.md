@@ -18,8 +18,20 @@ In the future this framework will support:
 ### Installation
 TODO: CREATE NPM MODULE
 
-### Getting Started
-To Initialize Creton, you'll need to include the module in a file, and create a new instance of the Creton class.
+### Loading the proxy lists
+To Initialize Creton, you'll need to include the module in a file, and create a new instance of the Creton class to pull down the latest proxy lists.
+This process *must* be performed before the framework can be used.
+```js
+const Creton = require('cretonjs');
+
+let creton = new Creton({loadProxies: false});
+
+creton.proxy.getLatestProxyLists();
+```
+
+### Getting started
+
+To create an instance of Creton to use for your HTTP Client, instantiate the class.
 ```js
 const Creton = require('cretonjs');
 
