@@ -1,6 +1,6 @@
 # CretonJS
 ### Overview
-CretonJS is a HTTP abstraction layer for creating a sophisticated non browser based HTTP client.
+CretonJS is an HTTP abstraction layer for creating a sophisticated non browser based HTTP client.
 This framework will enable you to create a location aware HTTP client that has the ability to mimic legitimate human behaviour / traffic.
 
 Currently, the framework supports:
