@@ -57,6 +57,9 @@ class proxyService {
         // Read in the list of proxies from the text file and split by new line into array
         let rawProxyList = fs.readFileSync(pathToProxyList).toString().split(/\n/g);
         let emptyProxyList = [];
+
+        this.debugStatement('loadProxyList', 'Read ' + rawProxyList.length + ' proxies in from disk.');
+
         for (let proxyAddress in rawProxyList) {
             // split out port from IP to decorate the proxy for filtering later on
             let newProxyGeoData = this.loadGeoIpData(rawProxyList[proxyAddress].split(':')[0]);
