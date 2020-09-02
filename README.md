@@ -104,5 +104,29 @@ let creton = new Creton({
 let HTTPService = creton.createNewHTTPClient();
 ```
 
+### Accessing the HTTP response
+You have the ability to access the HTTP response to a Creton request in two ways. Firstly, a custom `callback` that takes in the following arguments:
+`err => any errors encountered during the HTTP request;`
+`response => the raw HTTP response, including headers;`
+`body => the Body of the http response`
+
+An example callback would be:
+```js
+httpClient.sendHTTPRequest((err, resp, body) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+    if (resp.statusCode !== 200) {
+        console.log('Hmm Looks like something went wrong... This proxy needs to be discarded.');
+    } else {
+        console.log('We loaded the resource! This proxy works!');
+        console.log(body);
+    }
+});
+```
+
+The other way to access the HTTP response is via the HTTP Client `httpResponse` object. This will be filled on the HTTP request has been executed and will contain the `<response>` and `<body>`.
+
 ### Examples
 See `/examples` for example code. This will be added to in order to be more comprehensive.
