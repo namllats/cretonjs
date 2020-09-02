@@ -7,7 +7,7 @@
 const Creton = require('../index');
 
 let creton = new Creton({
-    loadProxies: false,
+    readProxyListFromDisk: false,
     debug: true
 });
 

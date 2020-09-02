@@ -25,7 +25,7 @@ This process *must* be performed before the framework can be used.
 ```js
 const Creton = require('cretonjs');
 
-let creton = new Creton({loadProxies: false});
+let creton = new Creton({readProxyListFromDisk: false});
 
 creton.proxy.getLatestProxyLists();
 ```
