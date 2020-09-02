@@ -108,7 +108,7 @@ let HTTPService = creton.createNewHTTPClient();
 You have the ability to access the HTTP response to a Creton request in two ways. Firstly, a custom `callback` that takes in the following arguments:
 `err => any errors encountered during the HTTP request;`
 `response => the raw HTTP response, including headers;`
-`body => the Body of the http response`
+`body => the Body of the HTTP response`
 
 An example callback would be:
 ```js
