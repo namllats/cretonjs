@@ -48,7 +48,7 @@ let HTTPService = creton.createNewHTTPClient(); // Will load the next proxy in t
 let HTTPService = creton.createNewHTTPClient('127.0.0.1:8080'); // Will use the provided proxy
 ```
 
-### Filtering Proxies
+### Filtering proxies
 When it comes to filtering proxies, you have three levels of control: Region, Country, City.
 
 The filtering is done via passing a simple config JSON object into the `Creton` class upon instantiation.
@@ -61,6 +61,26 @@ let creton = new Creton({
     proxyFilter: proxyFilter
 });
 ```
+
+### Custom proxy list
+If you wish to load your own proxy list, it must adhere to the following pattern. `IP:PORT\n`.
+
+Example:
+```
+127.0.0.1:8080
+10.0.0.1:1337
+```
+To load this into your Creton instance, add a config flag for `proxyListPath` like such:
+
+```js
+let proxyListPath = '~/proxies.txt';
+
+let creton = new Creton({
+    proxyListPath: proxyListPath
+});
+
+```
+Note: You can still perform geographic filtering on a custom proxy list using the regular `proxyFilter` config object.
 
 ### Header randomization
 Currently, Creton will handle the generation of `random` HTTP headers. This includes:
