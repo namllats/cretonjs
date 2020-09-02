@@ -18,9 +18,8 @@ let creton = new Creton({
 
 let httpClient = creton.createNewHTTPClient();
 
-httpClient.setOptionsForNextRequest("https://api.my-ip.io/", "GET");
-
-httpClient.sendHTTPRequest((err, resp, body) => {
+// HTTP Response Handlers
+let firstHTTPRequestResponseHandler = function (err, resp, body, httpClient) {
     if (err) {
         console.log(err);
         return;
@@ -29,13 +28,15 @@ httpClient.sendHTTPRequest((err, resp, body) => {
         console.log('Hmm Looks like something went wrong... This proxy needs to be discarded.');
     } else {
         console.log('Alright! We performed the first request! Nothing suspicious here...');
+
+        httpClient.updateRequestOptionsForNextRequest("https://api.my-ip.io/ip.json", "GET");
+
+        httpClient.sendHTTPRequest(secondHTTPRequestResponseHandler);
+
     }
-});
+};
 
-
-httpClient.updateRequestOptionsForNextRequest("https://api.my-ip.io/ip.json", "GET");
-
-httpClient.sendHTTPRequest((err, resp, body) => {
+let secondHTTPRequestResponseHandler = function (err, resp, body, httpClient) {
     if (err) {
         console.log(err);
         return;
@@ -45,4 +46,10 @@ httpClient.sendHTTPRequest((err, resp, body) => {
     } else {
         console.log('Victory! We have now loaded the resource we wanted. All whilst presenting a legitimate browsing pattern.');
     }
-});
+};
+
+// Setup of first request
+httpClient.setOptionsForFirstRequest("https://api.my-ip.io/", "GET");
+
+// Trigger first request
+httpClient.sendHTTPRequest(firstHTTPRequestResponseHandler);

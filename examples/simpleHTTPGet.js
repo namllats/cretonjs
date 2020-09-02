@@ -14,7 +14,7 @@ let creton = new Creton({
 
 let httpClient = creton.createNewHTTPClient();
 
-httpClient.setOptionsForNextRequest("https://api.my-ip.io/ip.json", "GET");
+httpClient.setOptionsForFirstRequest("https://api.my-ip.io/ip.json", "GET");
 
 httpClient.sendHTTPRequest((err, resp, body) => {
     if (err) {

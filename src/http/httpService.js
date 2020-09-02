@@ -20,7 +20,7 @@ class httpService {
      * @param body - String - HTTP Body (IF POST)
      * @returns {{headers: *, agent: createHttpsProxyAgent | HttpsProxyAgent, method: *, followRedirect: boolean, uri: *, timeout: number, maxRedirects: number}}
      */
-    setOptionsForNextRequest(uri, method, body) {
+    setOptionsForFirstRequest(uri, method, body) {
         this.options = {
             uri: uri,
             method: method,
@@ -67,7 +67,9 @@ class httpService {
             {'Cookie': '_ga=GA1.2.1673464361.1560021040;_gid=GA1.2.1991051347.1560021040'},
             {'Referer': uri},
         ];
+
         this.debugStatement('generateRandomHTTPHeaders', 'HTTP Headers generated');
+
         let newHeaderObject = {};
         for (let headers in headerTemplate) {
 
@@ -83,6 +85,7 @@ class httpService {
         }
         this.debugStatement('generateRandomHTTPHeaders', 'Headers randomized');
         this.debugStatement('generateRandomHTTPHeaders', 'Header Values: ' + JSON.stringify(newHeaderObject));
+
         return newHeaderObject;
 
     }
@@ -134,17 +137,24 @@ class httpService {
 
 
     sendHTTPRequest(callback) {
-        let callbackStatement = callback !== undefined ? callback : this.defaultCallback;
+        this.callback = callback !== undefined ? callback : undefined;
         this.debugStatement('sendHTTPRequest', 'Sending HTTP Request');
-        return request(this.options, callbackStatement);
+        return request(this.options, (err, resp, body) => {
+            this.HTTPResponseHandler(err, resp, body)
+        });
     }
 
-    defaultCallback(error, response, body) {
-        // this.debugStatement('defaultCallback', 'HTTP Response received.');
+    HTTPResponseHandler(error, response, body) {
+        this.debugStatement('HTTPResponseHandler', 'HTTP Response received.');
         this.httpResponse = {
             response: response,
             body: body
         };
+
+        if (this.callback !== undefined) {
+            this.callback(error, response, body, this);
+        }
+
     }
 
     debugStatement(fn, message) {
