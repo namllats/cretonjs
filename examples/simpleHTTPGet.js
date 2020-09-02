@@ -27,4 +27,3 @@ httpClient.sendHTTPRequest((err, resp, body) => {
         console.log('We loaded the resource! This proxy works!');
     }
 });
-

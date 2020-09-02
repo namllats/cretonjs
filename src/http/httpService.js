@@ -37,6 +37,23 @@ class httpService {
 
     }
 
+    /**
+     *
+     * @param uri - String . e.g https://website.com/path
+     * @param method - String - HTTP Method
+     * @param body - String - HTTP Body (IF POST)
+     * @returns {{headers: *, agent: createHttpsProxyAgent | HttpsProxyAgent, method: *, followRedirect: boolean, uri: *, timeout: number, maxRedirects: number}}
+     */
+    updateRequestOptionsForNextRequest(uri, method, body) {
+        this.options.uri = uri;
+        this.options.method = method;
+        this.options.body = body;
+
+        this.debugStatement('updateRequestOptionsForNextRequest', 'Request options updated.');
+
+        return this.options;
+    }
+
     generateRandomHTTPHeaders(uri) {
         let headerTemplate = [
             {'User-Agent': this.getRandomUserAgent()},
