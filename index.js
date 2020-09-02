@@ -2,7 +2,7 @@ const httpService = require('./src/http/httpService');
 const proxyService = require('./src/proxy/proxyService');
 
 
-class creton {
+class Creton {
     constructor(config) {
         // Init config
         this.config = config;
@@ -25,4 +25,4 @@ class creton {
     }
 }
 
-module.exports = creton;
+module.exports = Creton;
