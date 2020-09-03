@@ -1,6 +1,6 @@
 {
   "name": "cretonjs",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "CretonJS is an HTTP abstraction layer for creating custom NodeJS HTTP clients when performing red teaming / penetration testing to accurately test defenses.",
   "main": "index.js",
   "scripts": {
