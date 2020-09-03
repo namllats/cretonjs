@@ -22,8 +22,8 @@ httpClient.sendHTTPRequest((err, resp, body) => {
         return;
     }
     if (resp.statusCode !== 200) {
-        console.log('Hmm Looks like something went wrong... This proxy needs to be discarded.');
+        console.log('\nHmm Looks like something went wrong... This proxy needs to be discarded.');
     } else {
-        console.log('We loaded the resource! This proxy works!');
+        console.log('\nWe loaded the resource! This proxy works!');
     }
 });
