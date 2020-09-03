@@ -70,6 +70,9 @@ class proxyService {
 
     loadProxyList(proxyListPath) {
         let pathToProxyList = proxyListPath !== undefined ? proxyListPath : __dirname + '/proxies.txt';
+
+        this.debugStatement('loadProxyList', 'Reading proxies from: ' + pathToProxyList);
+
         // Read in the list of proxies from the text file and split by new line into array
         let rawProxyList = fs.readFileSync(pathToProxyList).toString().split(/\n/g);
         let emptyProxyList = [];
