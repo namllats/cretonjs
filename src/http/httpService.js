@@ -26,7 +26,7 @@ class httpService {
             method: method,
             headers: this.generateRandomHTTPHeaders(uri),
             agent: this.proxy,
-            timeout: 10000,
+            timeout: 5000,
             followRedirect: true,
             maxRedirects: 10,
             gzip: true,
@@ -140,6 +140,7 @@ class httpService {
     sendHTTPRequest(callback) {
         this.callback = callback !== undefined ? callback : undefined;
         this.debugStatement('sendHTTPRequest', 'Sending HTTP Request');
+
         return request(this.options, (err, resp, body) => {
             this.HTTPResponseHandler(err, resp, body)
         });

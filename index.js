@@ -23,6 +23,7 @@ class Creton {
 
         return new this.httpClient(nextProxyAddress, this.config.debug);
     }
+
 }
 
 module.exports = Creton;

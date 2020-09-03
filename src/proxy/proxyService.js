@@ -86,6 +86,7 @@ class proxyService {
                 'address': rawProxyList[proxyAddress],
                 'currentRequestCount': 0,
                 'isWorking': true,
+                'hasBeenTested': false,
                 'geoData': newProxyGeoData
             }
 
