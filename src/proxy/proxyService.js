@@ -24,10 +24,18 @@ class proxyService {
      */
     getLatestProxyLists() {
         this.debugStatement('getLatestProxyLists', 'Fetching new lists.');
-        request.get('https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt', this.addProxiesToLocalList);
-        request.get('https://api.proxyscrape.com/?request=getproxies&proxytype=http&timeout=10000&ssl=yes', this.addProxiesToLocalList);
-        request.get('https://www.proxy-list.download/api/v1/get?type=https&anon=elite', this.addProxiesToLocalList);
-        request.get('https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt', this.addProxiesToLocalList);
+        request.get('https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt', (err, resp, body) => {
+            this.addProxiesToLocalList(err, resp, body);
+        });
+        request.get('https://api.proxyscrape.com/?request=getproxies&proxytype=http&timeout=10000&ssl=yes', (err, resp, body) => {
+            this.addProxiesToLocalList(err, resp, body);
+        });
+        request.get('https://www.proxy-list.download/api/v1/get?type=https&anon=elite', (err, resp, body) => {
+            this.addProxiesToLocalList(err, resp, body);
+        });
+        request.get('https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt', (err, resp, body) => {
+            this.addProxiesToLocalList(err, resp, body);
+        });
     }
 
 
@@ -38,17 +46,25 @@ class proxyService {
 
             let proxyFilePath = __dirname + '/proxies.txt';
             if (!fs.existsSync(proxyFilePath)) {
+
+                this.debugStatement('addProxiesToLocalList', 'Creating new proxy file @ ' + proxyFilePath);
+
                 fs.closeSync(fs.openSync(proxyFilePath, 'w'));
                 currentLocalProxyList = '';
             } else {
                 currentLocalProxyList = fs.readFileSync(proxyFilePath).toString();
             }
 
+            let newProxiesAdded = 0;
+
             for (let item in proxyList) {
                 if ((proxyList[item].match(/\./g) || []).length === 3 && (currentLocalProxyList.indexOf(proxyList[item]) === -1)) {
                     fs.appendFileSync(proxyFilePath, proxyList[item] + '\n');
+                    newProxiesAdded++;
                 }
             }
+
+            this.debugStatement('addProxiesToLocalList', 'Added ' + newProxiesAdded + ' new proxies from list.');
         }
     }
 
