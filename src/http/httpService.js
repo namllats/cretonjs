@@ -29,6 +29,7 @@ class httpService {
             timeout: 10000,
             followRedirect: true,
             maxRedirects: 10,
+            gzip: true,
             body: body
         }
 
@@ -59,7 +60,7 @@ class httpService {
             {'User-Agent': this.getRandomUserAgent()},
             {'Connection': 'keep-alive'},
             {'Accept': 'text/html'},
-            {'Accept-Encoding': 'compress'},
+            {'Accept-Encoding': 'gzip'},
             {'Sec-Fetch-Site': 'same-origin'},
             {'Sec-Fetch-Mode': 'cors'},
             {'Accept-Language': this.getRandomAcceptLanguageHeader()},

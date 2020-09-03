@@ -19,6 +19,7 @@ let creton = new Creton({
 let httpClient = creton.createNewHTTPClient();
 
 // HTTP Response Handlers
+// First HTTP Response handler has the httpClient passed to it, so that it can be re used when chaining subsequent requests
 let firstHTTPRequestResponseHandler = function (err, resp, body, httpClient) {
     if (err) {
         console.log(err);

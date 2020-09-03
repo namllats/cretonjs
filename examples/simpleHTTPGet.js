@@ -14,7 +14,7 @@ let creton = new Creton({
 
 let httpClient = creton.createNewHTTPClient();
 
-httpClient.setOptionsForFirstRequest("https://api.my-ip.io/ip.json", "GET");
+httpClient.setOptionsForFirstRequest("http://www.example.com/", "GET");
 
 httpClient.sendHTTPRequest((err, resp, body) => {
     if (err) {
@@ -24,6 +24,7 @@ httpClient.sendHTTPRequest((err, resp, body) => {
     if (resp.statusCode !== 200) {
         console.log('Hmm Looks like something went wrong... This proxy needs to be discarded.');
     } else {
+        console.log(body);
         console.log('We loaded the resource! This proxy works!');
     }
 });
