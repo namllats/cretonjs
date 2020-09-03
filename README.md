@@ -62,7 +62,7 @@ HTTPService.setOptionsForFirstRequest('http://example.com', 'GET');
 // When its time for the next request
 HTTPService.updateRequestOptionsForNextRequest('http://example.com/login','POST',{username:"test", password:"test"});
 ```
-See `/examples/chainingHTTPGetReqeustsFromASingleIP.js` for a practical example of how to use this functionality.
+See `/examples/chainingHTTPGetRequestsFromASingleIP.js` for a practical example of how to use this functionality.
 ### Filtering proxies
 When it comes to filtering proxies, you have three levels of control: Region, Country, City.
 
