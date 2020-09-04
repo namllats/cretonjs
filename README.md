@@ -143,6 +143,26 @@ httpClient.sendHTTPRequest((err, resp, body) => {
 });
 ```
 
+### Accessing HTTP request options from the previous request
+If you need to access any information from the request that was just sent, that called the current callback function, you can access this directly from the HTTPClient.
+Call the `getPreviousRequestOptions()` function to have the request options that were passed through to the underlying Request library.
+
+```js
+httpClient.sendHTTPRequest((err, resp, body) => {
+    if (err) {
+        console.log(err);
+        return;
+    }
+    // If the previous request was a POST, you can access the body that was sent to the server.
+    console.log(this.getPreviousRequestOptions().body);
+    
+    // Access the full HTTP Header object from the previous request
+    console.log(this.getPreviousRequestOptions().headers);
+
+});
+```
+
+
 The other way to access the HTTP response is via the HTTP Client `httpResponse` object. This will be filled on the HTTP request has been executed and will contain the `<response>` and `<body>`.
 
 ### Examples

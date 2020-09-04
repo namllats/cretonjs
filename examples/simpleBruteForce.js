@@ -61,6 +61,8 @@ let HTTPPostResponseHandler = function (err, resp, body) {
     } else {
         // If the login is successful - the website will redirect the bot to /bank/main.jsp
         if (resp.headers.location === "/bank/main.jsp") {
+            // Note: You can access the options of the HTTP request that was just sent via the `this.getPreviousRequestOptions` function.
+            // This will return the options that were passed through to the underlying Request lib.
             console.log("HooRah, the login attempt with the following credentials worked : " + this.getPreviousRequestOptions().body);
         } else {
             console.log('Uh Oh.. This login failed....');
