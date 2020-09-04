@@ -10,6 +10,7 @@ Currently, the framework supports:
 - Location filtering on proxy nodes e.g. `Region -> Country -> City`
 - Automatic proxy rotation
 - HTTP Header randomization e.g. random ordering of all headers, random content of User-Agent and Accept-Language
+- "Sticky" HTTP Sessions to ensure continuity of Cookies, IPs, User Agents etc.
 
 In the future this framework will support:
 
@@ -159,6 +160,18 @@ httpClient.sendHTTPRequest((err, resp, body) => {
     // Access the full HTTP Header object from the previous request
     console.log(this.getPreviousRequestOptions().headers);
 
+});
+```
+
+### Continuity of sessions
+To make traffic less suspicious, it can be important to have continuity within each individual session.
+This involves setting HTTP Cookies for subsequent HTTP requests and ensuring that the HTTP Headers remain the same on a "Per IP" basis.
+
+To use this functionality within Creton, simply add the `stickySessions:true` flag when instantiating an instance of Creton.
+
+```js
+let creton = new Creton({
+    stickySessions: true
 });
 ```
 
