@@ -14,7 +14,7 @@
 const Creton = require('../index');
 
 let creton = new Creton({
-    proxyFilters: {"country": "UK"},
+    proxyFilters: {"country": "PO"},
     stickySessions: true,
     debug: true
 });
@@ -49,7 +49,7 @@ let HTTPPostResponseHandler = function (err, resp, body) {
     } else {
         // If the login is successful - the website will redirect the bot to /bank/main.jsp
         if(resp.headers.location === "/bank/main.jsp") {
-            console.log("HooRah, the login attempt with the following credentials worked : " + this.getPreviousRequestOptions.body);
+            console.log("HooRah, the login attempt with the following credentials worked : " + this.getPreviousRequestOptions().body);
         } else {
             console.log('Uh Oh.. This login failed....');
         }
