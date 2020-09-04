@@ -14,7 +14,6 @@
 const Creton = require('../index');
 
 let creton = new Creton({
-    proxyFilters: {"country": "NZ"},
     stickySessions: true,
     debug: true
 });

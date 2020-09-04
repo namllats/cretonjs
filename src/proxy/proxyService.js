@@ -11,7 +11,7 @@ class proxyService {
      * e.g. {"city":"Bangkok"}
      */
     constructor(filters, debug) {
-        this.filters = filters !== undefined ? filters : {};
+        this.filters = filters !== undefined ? filters : undefined;
         this.proxyList = [];
         this.currentPosition = 0;
         this.debug = debug;
