@@ -21,7 +21,7 @@ class Creton {
     createNewHTTPClient(customProxyAddress) {
         let nextProxyAddress = customProxyAddress === undefined ? this.proxy.fetchNextProxy().address : customProxyAddress;
 
-        return new this.httpClient(nextProxyAddress, this.config.debug);
+        return new this.httpClient(nextProxyAddress, this.config.stickySessions, this.config.debug);
     }
 
 }

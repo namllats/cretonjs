@@ -1,0 +1,65 @@
+/**
+ * This is an example bot written with the CretonJS framework.
+ *
+ * In this case, we will target the altoromutual.com fake banking website. This bot will attempt to validate a set of user credentials that it will iterate through.
+ *
+ * The login HTML page is : http://www.altoromutual.com/login.jsp
+ * and the login POST is sent to : http://www.altoromutual.com/doLogin
+ *
+ * In this case, we will be chaining 2 requests to ensure that we have the correct cookies on submission of the credentials, and to roughly mimic customer behavior.
+ *
+ * Note: The cookie stickiness is handled automatically when you use the "stickySession:true" flag on instantiation of Creton.
+ */
+
+const Creton = require('../index');
+
+let creton = new Creton({
+    proxyFilters: {"country": "UK"},
+    stickySessions: true,
+    debug: true
+});
+
+let httpClient = creton.createNewHTTPClient();
+
+let credentials = require('./src/fakeCredentials.json').credentials;
+
+let HTTPGetResponseHandler = function (err, resp, body) {
+    // Check to make sure the page was loaded and there were no errors in the HTTP request
+    if (err || resp.statusCode !== 200) {
+        console.log("Something went wrong with this request...");
+    } else {
+
+        let bodyString = "uid=admin&passw=admin";
+
+        let HTTPBodyData = {
+            bodyContent: bodyString,
+            bodyType : 'application/x-www-form-urlencoded'
+        }
+
+        httpClient.updateRequestOptionsForNextRequest("http://www.altoromutual.com/doLogin", "POST", HTTPBodyData);
+
+        httpClient.sendHTTPRequest(HTTPPostResponseHandler);
+    }
+};
+
+let HTTPPostResponseHandler = function (err, resp, body) {
+    // Check to make sure the page was loaded and there were no errors in the HTTP request
+    if (err || resp.statusCode !== 302) {
+        console.log("Something went wrong with this request...");
+    } else {
+        // If the login is successful - the website will redirect the bot to /bank/main.jsp
+        if(resp.headers.location === "/bank/main.jsp") {
+            console.log("HooRah, the login attempt with the following credentials worked : " + this.getPreviousRequestOptions.body);
+        } else {
+            console.log('Uh Oh.. This login failed....');
+        }
+
+    }
+}
+
+
+// Setup of first request
+httpClient.setOptionsForFirstRequest("http://www.altoromutual.com/login.jsp", "GET");
+
+// Trigger first request
+httpClient.sendHTTPRequest(HTTPGetResponseHandler);

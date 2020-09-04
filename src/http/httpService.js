@@ -2,8 +2,9 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const request = require('request');
 
 class httpService {
-    constructor(proxy, debug) {
+    constructor(proxy, stickySessions, debug) {
         this.debug = debug;
+        this.stickySessions = stickySessions;
         this.proxy = this.setHTTPProxy(proxy);
     }
 
@@ -17,10 +18,10 @@ class httpService {
      *
      * @param uri - String . e.g https://website.com/path
      * @param method - String - HTTP Method
-     * @param body - String - HTTP Body (IF POST)
+     * @param body - HTTPBodyData - HTTP Body data (IF POST)
      * @returns {{headers: *, agent: createHttpsProxyAgent | HttpsProxyAgent, method: *, followRedirect: boolean, uri: *, timeout: number, maxRedirects: number}}
      */
-    setOptionsForFirstRequest(uri, method, body) {
+    setOptionsForFirstRequest(uri, method, HTTPBodyData) {
         this.options = {
             uri: uri,
             method: method,
@@ -29,9 +30,14 @@ class httpService {
             timeout: 5000,
             followRedirect: true,
             maxRedirects: 10,
-            gzip: true,
-            body: body
+            gzip: true
         }
+
+        if (HTTPBodyData !== undefined) {
+            this.options.body = HTTPBodyData.bodyContent;
+            this.options.headers['Content-Type'] = HTTPBodyData.bodyType;
+        }
+
 
         this.debugStatement('setOptionsForNextRequest', 'Request options set');
         return this.options;
@@ -42,13 +48,18 @@ class httpService {
      *
      * @param uri - String . e.g https://website.com/path
      * @param method - String - HTTP Method
-     * @param body - String - HTTP Body (IF POST)
+     * @param HTTPBodyData - Object - HTTP Body Data (IF POST)
      * @returns {{headers: *, agent: createHttpsProxyAgent | HttpsProxyAgent, method: *, followRedirect: boolean, uri: *, timeout: number, maxRedirects: number}}
      */
-    updateRequestOptionsForNextRequest(uri, method, body) {
+    updateRequestOptionsForNextRequest(uri, method, HTTPBodyData) {
         this.options.uri = uri;
         this.options.method = method;
-        this.options.body = body;
+
+        if (HTTPBodyData !== undefined) {
+            this.options.body = HTTPBodyData.bodyContent;
+            this.options.headers['Content-Type'] = HTTPBodyData.bodyType;
+        }
+
 
         this.debugStatement('updateRequestOptionsForNextRequest', 'Request options updated.');
 
@@ -62,10 +73,11 @@ class httpService {
             {'Accept': 'text/html'},
             {'Accept-Encoding': 'gzip'},
             {'Sec-Fetch-Site': 'same-origin'},
+            {'Content-Encoding': 'application/json'},
             {'Sec-Fetch-Mode': 'cors'},
             {'Accept-Language': this.getRandomAcceptLanguageHeader()},
             {'Cache-Control': 'max-age=0'},
-            {'Cookie': '_ga=GA1.2.1673464361.1560021040;_gid=GA1.2.1991051347.1560021040'},
+            {'Cookie': '_ga=GA1.2.1673464361.1560021040;_gid=GA1.2.1991051347.1560021040;'},
             {'Referer': uri},
         ];
 
@@ -136,6 +148,10 @@ class httpService {
         return UAs[Math.floor(Math.random() * UAs.length)];
     }
 
+    getPreviousRequestOptions() {
+        return this.options;
+    }
+
 
     sendHTTPRequest(callback) {
         this.callback = callback !== undefined ? callback : undefined;
@@ -153,10 +169,37 @@ class httpService {
             body: body
         };
 
+        if (!error) {
+            if (this.stickySessions) {
+                this.debugStatement('HTTPResponseHandler', 'stickySessions enabled. Stepping through Cookie functions.');
+
+                this.setCookiesFromHTTPRequestForSubsequentRequests(response.headers);
+            }
+        }
+
         if (this.callback !== undefined) {
             this.callback(error, response, body, this);
         }
 
+    }
+
+    setCookiesFromHTTPRequestForSubsequentRequests(headers) {
+        if (headers['set-cookie'] !== undefined) {
+            let cookiesToSet = headers['set-cookie'];
+
+            this.debugStatement('setCookiesFromHTTPRequestForSubsequentRequests', 'Cookies received from server.');
+
+            for (let cookie in cookiesToSet) {
+                let cookieToAppend = this.splitCookieIntoNameAndValue(cookiesToSet[cookie]);
+                this.options.headers['Cookie'] += cookieToAppend;
+                this.debugStatement('setCookiesFromHTTPRequestForSubsequentRequests', 'Added new cookie : '
+                    + cookieToAppend + ' to session cookies.')
+            }
+        }
+    }
+
+    splitCookieIntoNameAndValue(setCookieValue) {
+        return setCookieValue.split(' ')[0];
     }
 
     debugStatement(fn, message) {
