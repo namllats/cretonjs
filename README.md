@@ -174,6 +174,7 @@ let creton = new Creton({
     stickySessions: true
 });
 ```
+Note: See `./examples/simpleBruteForce.js` for a practical example / use case for sticky sessions.
 
 The other way to access the HTTP response is via the HTTP Client `httpResponse` object. This will be filled on the HTTP request has been executed and will contain the `<response>` and `<body>`.
 

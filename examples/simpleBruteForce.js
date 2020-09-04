@@ -47,6 +47,7 @@ let HTTPGetResponseHandler = function (err, resp, body) {
             bodyType: 'application/x-www-form-urlencoded'
         }
 
+        // Update the httpClient to target a new URL, with a POST request and the above request data.
         httpClient.updateRequestOptionsForNextRequest("http://www.altoromutual.com/doLogin", "POST", HTTPBodyData);
 
         httpClient.sendHTTPRequest(HTTPPostResponseHandler);
