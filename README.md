@@ -178,5 +178,16 @@ Note: See `./examples/simpleBruteForce.js` for a practical example / use case fo
 
 The other way to access the HTTP response is via the HTTP Client `httpResponse` object. This will be filled on the HTTP request has been executed and will contain the `<response>` and `<body>`.
 
+```js
+ // After the HTTP request has been sent and response received
+ // you can access the following attributes
+
+let HTTPStatusCode = httpClient.httpResponse.statusCode;
+
+let HTTPResponseHeaders = httpClient.httpResponse.headers;
+
+let HTTPResponseBody = httpClient.httpResponse.body;
+```
+
 ### Examples
 See `/examples` for example code. This will be added to in order to be more comprehensive.
