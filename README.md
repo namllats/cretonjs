@@ -62,7 +62,7 @@ They both take three arguments: `<uri>, <HTTPMethod>, <HTTPBody>` and are used a
 HTTPService.setOptionsForFirstRequest('http://example.com', 'GET');
 // Send request.....
 
-// When its time for the next request
+// When it's time for the next request
 HTTPService.updateRequestOptionsForNextRequest('http://example.com/login','POST',{username:"test", password:"test"});
 ```
 See `/examples/chainingHTTPGetRequestsFromASingleIP.js` for a practical example of how to use this functionality.
