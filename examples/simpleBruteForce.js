@@ -24,8 +24,9 @@ let credentialHandlerFn = function () {
 
     return {
         getNextCredentialPair() {
+            let nextCredentialPair = credentials[pos].split(':');
             pos++;
-            return credentials[pos - 1].split(':');
+            return nextCredentialPair;
         }
     }
 }
