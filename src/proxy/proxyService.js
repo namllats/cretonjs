@@ -36,6 +36,43 @@ class proxyService {
         request.get('https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt', (err, resp, body) => {
             this.addProxiesToLocalList(err, resp, body);
         });
+
+        request.get('https://www.proxynova.com/proxy-server-list/elite-proxies/', (err, resp, body) => {
+            if (!err) {
+                let transformedBody = this.customHTMLProxyListHandler(body, {
+                    firstSplitter: 'write',
+                    secondSplitter: '\\n\\n'
+                });
+
+                this.addProxiesToLocalList(err, resp, transformedBody);
+            }
+        });
+    }
+
+    customHTMLProxyListHandler(body, splitters) {
+        if (body) {
+            let transformedProxyContent = "";
+
+            let firstSplitRegexp = new RegExp(splitters.firstSplitter, 'g');
+            let initialSplitOnBody = body.split(firstSplitRegexp);
+
+            for (let chunk in initialSplitOnBody) {
+
+                let chunkContainsIP = initialSplitOnBody[chunk].match(/(?:[0-9]{1,3}\.){3}[0-9]{1,3}/);
+
+                if (chunkContainsIP && chunk != 0) {
+                    let secondSplitRegexp = new RegExp(splitters.secondSplitter, 'g');
+                    let secondSplitOnChunk = initialSplitOnBody[chunk].split(secondSplitRegexp);
+
+                    let port = secondSplitOnChunk[0].match(/[0-9]{4,5}/);
+
+                    transformedProxyContent += chunkContainsIP + ":" + port + "\n";
+
+                }
+            }
+        }
+
+        return "";
     }
 
 
