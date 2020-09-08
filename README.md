@@ -151,9 +151,9 @@ The other way to access the HTTP response is via the HTTP Client `httpResponse` 
  // After the HTTP request has been sent and response received
  // you can access the following attributes
 
-let HTTPStatusCode = httpClient.httpResponse.statusCode;
+let HTTPStatusCode = httpClient.httpResponse.response.statusCode;
 
-let HTTPResponseHeaders = httpClient.httpResponse.headers;
+let HTTPResponseHeaders = httpClient.httpResponse.response.headers;
 
 let HTTPResponseBody = httpClient.httpResponse.body;
 ```
