@@ -47,6 +47,24 @@ class proxyService {
                 this.addProxiesToLocalList(err, resp, transformedBody);
             }
         });
+
+        request.get('https://www.proxy-list.download/api/v0/get?l=en&t=http', (err, resp, body) => {
+
+            if (!err) {
+                let ipList = JSON.parse(body)[0].LISTA;
+                let transformedProxyContent = "";
+
+                for (let item in ipList) {
+                    let IPInfo = ipList[item];
+
+                    if (IPInfo.ANON === "Anonymous" || IPInfo.ANON === "Elite") {
+                        transformedProxyContent += IPInfo.IP + ":" + IPInfo.PORT + "\n";
+                    }
+                }
+
+                this.addProxiesToLocalList(err, resp, transformedProxyContent);
+            }
+        });
     }
 
     customHTMLProxyListHandler(body, splitters) {
