@@ -77,7 +77,7 @@ class httpService {
             {'Sec-Fetch-Mode': 'cors'},
             {'Accept-Language': this.getRandomAcceptLanguageHeader()},
             {'Cache-Control': 'max-age=0'},
-            {'Cookie': '_ga=GA1.2.1673464361.1560021040;_gid=GA1.2.1991051347.1560021040;'},
+            {'Cookie': this.generateRandomCookies()},
             {'Referer': uri},
         ];
 
@@ -103,8 +103,39 @@ class httpService {
 
     }
 
-    generateRandomGACookies() {
+    generateRandomCookies() {
+        this.debugStatement('generateRandomCookies', 'Generating random cookies');
 
+        let cookieTemplate = [
+            {"_ga": this.generateGACookieValues()},
+            {"_gid": this.generateGACookieValues()}
+        ];
+        this.debugStatement('generateRandomCookies', 'Cookie values generated');
+
+        let newCookieString = "";
+        for (let cookie in cookieTemplate) {
+
+            let pos = Math.floor(Math.random() * cookieTemplate.length)
+            let nextCookieToAdd = cookieTemplate[pos];
+            newCookieString+= Object.keys(nextCookieToAdd)[0] + '=' + nextCookieToAdd[Object.keys(nextCookieToAdd)[0]] + ";";
+
+            cookieTemplate[pos] = undefined;
+
+            cookieTemplate = cookieTemplate.filter(function (val) {
+                return Boolean(val);
+            });
+        }
+
+        return newCookieString;
+
+    }
+
+    generateGACookieValues() {
+        let tenDigitNumber = Math.floor(1000000000 + Math.random() * 9000000000);
+        let elevenDigitNumber = Math.floor(10000000000 + Math.random() * 90000000000);
+        let baseGACookieValueTemplate = "GA1.2." + elevenDigitNumber + "." + tenDigitNumber;
+
+        return baseGACookieValueTemplate;
     }
 
     getRandomAcceptLanguageHeader() {
