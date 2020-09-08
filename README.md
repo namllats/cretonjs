@@ -83,7 +83,9 @@ let creton = new Creton({
 ### Custom proxy list
 If you wish to load your own proxy list, it must adhere to the following pattern. `IP:PORT\n`.
 
-Example:
+You can see a practical, implemented example in the `/examples/useCustomProxyList.js` file.
+
+Simple example:
 ```
 127.0.0.1:8080
 10.0.0.1:1337
@@ -96,7 +98,6 @@ let proxyListPath = '~/proxies.txt';
 let creton = new Creton({
     proxyListPath: proxyListPath
 });
-
 ```
 Note: You can still perform geographic filtering on a custom proxy list using the regular `proxyFilter` config object.
 
