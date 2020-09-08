@@ -163,19 +163,6 @@ httpClient.sendHTTPRequest((err, resp, body) => {
 });
 ```
 
-### Continuity of sessions
-To make traffic less suspicious, it can be important to have continuity within each individual session.
-This involves setting HTTP Cookies for subsequent HTTP requests and ensuring that the HTTP Headers remain the same on a "Per IP" basis.
-
-To use this functionality within Creton, simply add the `stickySessions:true` flag when instantiating an instance of Creton.
-
-```js
-let creton = new Creton({
-    stickySessions: true
-});
-```
-Note: See `./examples/simpleBruteForce.js` for a practical example / use case for sticky sessions.
-
 The other way to access the HTTP response is via the HTTP Client `httpResponse` object. This will be filled on the HTTP request has been executed and will contain the `<response>` and `<body>`.
 
 ```js
@@ -188,6 +175,19 @@ let HTTPResponseHeaders = httpClient.httpResponse.headers;
 
 let HTTPResponseBody = httpClient.httpResponse.body;
 ```
+
+### Continuity of sessions
+To make traffic less suspicious, it can be important to have continuity within each individual session.
+This involves setting HTTP Cookies for subsequent HTTP requests and ensuring that the HTTP Headers remain the same on a "Per IP" basis.
+
+To use this functionality within Creton, simply add the `stickySessions:true` flag when instantiating an instance of Creton.
+
+```js
+let creton = new Creton({
+    stickySessions: true
+});
+```
+Note: See `./examples/simpleBruteForce.js` for a practical example / use case for sticky sessions.
 
 ### Examples
 See `/examples` for example code. This will be added to in order to be more comprehensive.
