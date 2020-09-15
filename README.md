@@ -11,10 +11,10 @@ Currently, the framework supports:
 - Automatic proxy rotation
 - HTTP Header randomization e.g. random ordering of all headers, random content of User-Agent and Accept-Language
 - "Sticky" HTTP Sessions to ensure continuity of Cookies, IPs, User Agents etc.
+- Automatic validation that the proxies do in fact work
 
 In the future this framework will support:
 
-- Automatic validation that the proxies do in fact work (Currently they are assumed to be working)
 - "Smokescreen" functionality to create erroneous SOC alerts. e.g. Large volumes of requests from IPs outside of the target GEO, using static UA's and headers.
 - Support for Luminati and other paid proxy services
 
