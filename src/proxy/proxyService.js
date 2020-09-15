@@ -11,11 +11,17 @@ class proxyService {
      * e.g. {"region":"EU"}
      * e.g. {"country":"FR"}
      * e.g. {"city":"Bangkok"}
+     *
+     * @param validateProxies Bool - Whether or not the proxy list is to be validated
      */
-    constructor(filters, debug) {
+    constructor(filters, validateProxies, debug) {
         this.filters = filters !== undefined ? filters : undefined;
+        this.validateProxies = validateProxies;
         this.proxyList = [];
         this.currentPosition = 0;
+
+        this.validatedProxyExists = false;
+
         this.debug = debug;
     }
 
@@ -150,7 +156,7 @@ class proxyService {
             }
 
             // Test new IP against the current filters
-            if (this.testProxyAgainstFilter(newProxyGeoData)) {
+            if (this.testProxyAgainstFilter(newProxyGeoData) && newProxyObject.address !== "") {
                 emptyProxyList.push(newProxyObject);
             }
 
@@ -193,10 +199,22 @@ class proxyService {
     }
 
     fetchNextProxy() {
-        if (this.currentPosition < this.proxyList.length) {
+        // Test to make sure we are not at the end of the proxyList
+        if (this.currentPosition < this.proxyList.length - 1) {
             this.currentPosition++;
         } else {
             this.currentPosition = 0;
+        }
+
+        if (this.validateProxies === true && this.validatedProxyExists === true) {
+            while (this.proxyList[this.currentPosition].isWorking !== true || this.proxyList[this.currentPosition].hasBeenTested !== true) {
+                if (this.currentPosition < this.proxyList.length - 1) {
+                    this.currentPosition++;
+                } else {
+                    this.currentPosition = 0;
+                }
+            }
+
         }
 
         // Increment the count of usages for this IP
@@ -234,6 +252,8 @@ class proxyService {
             this.debugStatement('proxyTestCallback', this.proxyList[proxyPos].address + ' is working.');
             this.proxyList[proxyPos].isWorking = true;
             this.proxyList[proxyPos].hasBeenTested = true;
+
+            this.validatedProxyExists = true;
         }
     }
 
