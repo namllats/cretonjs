@@ -217,22 +217,23 @@ class proxyService {
             let httpClient = new HTTPService(proxyDetails.address, false, 'false');
             httpClient.setOptionsForFirstRequest("http://www.example.com/", "GET");
 
-            httpClient.sendHTTPRequest((err, resp, body) => {
-                this.proxyTestCallback(err, resp, body)
+            httpClient.JSONDataStore.set('proxyPos', proxy);
+            httpClient.sendHTTPRequest((err, resp, body, httpClient) => {
+                this.proxyTestCallback(err, resp, body, httpClient)
             });
 
         }
     }
 
-    proxyTestCallback(err, resp, body) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        if (resp.statusCode !== 200) {
-            console.log('\nHmm Looks like something went wrong... This proxy needs to be discarded.');
+    proxyTestCallback(err, resp, body, httpClient) {
+        let proxyPos = httpClient.JSONDataStore.get('proxyPos');
+        if (err || resp.statusCode !== 200) {
+            this.proxyList[proxyPos].isWorking = false;
+            this.proxyList[proxyPos].hasBeenTested = true;
         } else {
-            console.log('\nWe loaded the resource! This proxy works!');
+            this.debugStatement('proxyTestCallback', this.proxyList[proxyPos].address + ' is working.');
+            this.proxyList[proxyPos].isWorking = true;
+            this.proxyList[proxyPos].hasBeenTested = true;
         }
     }
 
