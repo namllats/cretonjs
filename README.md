@@ -191,5 +191,20 @@ let creton = new Creton({
 ```
 Note: See `./examples/simpleBruteForce.js` for a practical example / use case for sticky sessions.
 
+## Validating proxies
+To ensure the highest success rate of requests, CretonJS supports automatic proxy validation on instantiation. 
+This happens in an async manner, so until any proxies are validated, Creton will just return the next proxy in the list. 
+To ensure that there are always requests going out.
+ 
+To use this functionality, simply add the `validateProxies:true` flag when instantiating an instance of Creton.
+
+```js
+let creton = new Creton({
+    validateProxies: true
+});
+```
+
+Note: See `./examples/validatedProxiesOnly.js` for a practical example / implementation of this functionality.
+
 ### Examples
 See `/examples` for example code. This will be added to in order to be more comprehensive.
