@@ -12,6 +12,8 @@ const Creton = require('../index');
 
 let creton = new Creton({
     proxyFilters: {"country": "US"},
+    // validateProxies:true flag will trigger this Creton instance to test each proxy individually.
+    // It will then create a new, "fresh" pool of validated proxies.
     validateProxies: true,
     debug: true
 });
