@@ -2,6 +2,8 @@ const fs = require('fs');
 const geoip = require('geoip-lite');
 const request = require('request');
 
+const HTTPService = require('../http/httpService');
+
 class proxyService {
 
     /**
@@ -203,6 +205,37 @@ class proxyService {
         // Return latest version of the proxy config
         return this.proxyList[this.currentPosition];
     }
+
+    // This fn is called after a proxy list has been loaded. It will run through all the loaded proxies
+    // and test whether or not they do in fact work.
+    // triggered by a "validateProxies:true" flag on creton creation
+    testLoadedProxyList() {
+        for (let proxy in this.proxyList) {
+            let proxyDetails = this.proxyList[proxy];
+            this.debugStatement('testLoadedProxyList', 'Validating: ' + proxyDetails.address);
+            // Setup the HTTP client with the new proxy info
+            let httpClient = new HTTPService(proxyDetails.address, false, 'false');
+            httpClient.setOptionsForFirstRequest("http://www.example.com/", "GET");
+
+            httpClient.sendHTTPRequest((err, resp, body) => {
+                this.proxyTestCallback(err, resp, body)
+            });
+
+        }
+    }
+
+    proxyTestCallback(err, resp, body) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        if (resp.statusCode !== 200) {
+            console.log('\nHmm Looks like something went wrong... This proxy needs to be discarded.');
+        } else {
+            console.log('\nWe loaded the resource! This proxy works!');
+        }
+    }
+
 
     debugStatement(fn, message) {
         if (this.debug === true) {

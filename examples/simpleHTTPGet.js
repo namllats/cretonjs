@@ -8,6 +8,7 @@ const Creton = require('../index');
 
 let creton = new Creton({
     proxyFilters: {"country": "CA"},
+    validateProxies: true,
     debug: true
 });
 

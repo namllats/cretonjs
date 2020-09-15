@@ -12,6 +12,10 @@ class Creton {
         // Do not perform this if flag is false. This occurs on init run to collect local proxies
         if (config.readProxyListFromDisk !== false) {
             this.proxy.loadProxyList(this.config.proxyListPath);
+
+            if (config.validateProxies === true) {
+                this.proxy.testLoadedProxyList();
+            }
         }
 
         // Init http service as client
