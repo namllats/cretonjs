@@ -6,6 +6,8 @@ class httpService {
         this.debug = debug;
         this.stickySessions = stickySessions;
         this.proxy = this.setHTTPProxy(proxy);
+
+        this.JSONDataStore = this.internalDataStoreHandler();
     }
 
     setHTTPProxy(proxyAddress) {
@@ -117,7 +119,7 @@ class httpService {
 
             let pos = Math.floor(Math.random() * cookieTemplate.length)
             let nextCookieToAdd = cookieTemplate[pos];
-            newCookieString+= Object.keys(nextCookieToAdd)[0] + '=' + nextCookieToAdd[Object.keys(nextCookieToAdd)[0]] + ";";
+            newCookieString += Object.keys(nextCookieToAdd)[0] + '=' + nextCookieToAdd[Object.keys(nextCookieToAdd)[0]] + ";";
 
             cookieTemplate[pos] = undefined;
 
@@ -231,6 +233,26 @@ class httpService {
 
     splitCookieIntoNameAndValue(setCookieValue) {
         return setCookieValue.split(' ')[0];
+    }
+
+    internalDataStoreHandler() {
+        let store = {};
+
+        return {
+            set: function (key, value) {
+                store[key] = value;
+                return value;
+            },
+
+            get: function (key) {
+                return store[key];
+            },
+
+            delete: function (key) {
+                delete store[key];
+                return true;
+            }
+        }
     }
 
     debugStatement(fn, message) {
