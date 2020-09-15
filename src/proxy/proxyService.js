@@ -67,6 +67,8 @@ class proxyService {
         });
     }
 
+    // Hacky AF but should do the trick.... Split up an HTML body (usually for when proxies are returned inside
+    // an HTML <table> el....).
     customHTMLProxyListHandler(body, splitters) {
         if (body) {
             let transformedProxyContent = "";
