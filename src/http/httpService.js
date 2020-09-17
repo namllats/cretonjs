@@ -72,10 +72,9 @@ class httpService {
     /**
      *
      * @param uri String - the URI the HTTP request is being sent to. e.g. https://www.example.com
-     * @param method String - the HTTP Method being used in the call
      * @returns {{}}
      */
-    generateRandomHTTPHeaders(uri, method) {
+    generateRandomHTTPHeaders(uri) {
         let headerTemplate = [
             {'User-Agent': this.getRandomUserAgent()},
             {'Connection': 'keep-alive'},
