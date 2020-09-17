@@ -9,9 +9,11 @@ Currently, the framework supports:
 
 - Location filtering on proxy nodes e.g. `Region -> Country -> City`
 - Automatic proxy rotation
-- HTTP Header randomization e.g. random ordering of all headers, random content of User-Agent and Accept-Language
-- "Sticky" HTTP Sessions to ensure continuity of Cookies, IPs, User Agents etc.
 - Automatic validation that the proxies do in fact work
+- HTTP Header randomization e.g. random ordering of all headers, random content of User-Agent, Accept-Language and GA Cookies
+- "Sticky" HTTP Sessions to ensure continuity of Cookies, IPs, User Agents etc.
+
+
 
 In the future this framework will support:
 
