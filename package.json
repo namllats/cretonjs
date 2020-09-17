@@ -1,9 +1,10 @@
 {
   "name": "cretonjs",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "CretonJS is an HTTP abstraction layer for creating custom NodeJS HTTP clients when performing red teaming / penetration testing to accurately test defenses.",
   "main": "index.js",
   "scripts": {
+    "postinstall": "node src/helpers/postinstall.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
