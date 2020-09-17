@@ -35,6 +35,7 @@ class httpService {
             gzip: true
         }
 
+        // Handle content-type header ONLY if we are sending data
         if (HTTPBodyData !== undefined) {
             this.options.body = HTTPBodyData.bodyContent;
             this.options.headers['Content-Type'] = HTTPBodyData.bodyType;
@@ -68,14 +69,19 @@ class httpService {
         return this.options;
     }
 
-    generateRandomHTTPHeaders(uri) {
+    /**
+     *
+     * @param uri String - the URI the HTTP request is being sent to. e.g. https://www.example.com
+     * @param method String - the HTTP Method being used in the call
+     * @returns {{}}
+     */
+    generateRandomHTTPHeaders(uri, method) {
         let headerTemplate = [
             {'User-Agent': this.getRandomUserAgent()},
             {'Connection': 'keep-alive'},
             {'Accept': 'text/html'},
             {'Accept-Encoding': 'gzip'},
             {'Sec-Fetch-Site': 'same-origin'},
-            {'Content-Encoding': 'application/json'},
             {'Sec-Fetch-Mode': 'cors'},
             {'Accept-Language': this.getRandomAcceptLanguageHeader()},
             {'Cache-Control': 'max-age=0'},
@@ -183,6 +189,21 @@ class httpService {
 
     getPreviousRequestOptions() {
         return this.options;
+    }
+
+    /**
+     * @param cookieString String - the cookies in string format to append. E.g. "sessionID=abc-123;userID=def-456"
+     *
+     * @returns the full cookie string for the next HTTP request
+     */
+    addCustomHTTPCookies(cookieString) {
+        if (this.options !== undefined && this.options.headers !== undefined) {
+            this.debugStatement('addCustomHTTPCookies', 'Adding ' + cookieString + ' to the HTTP Cookies');
+            this.options.headers['Cookie'] += cookieString;
+        } else {
+            throw new Error("Do not attempt to add custom cookies before the options for a request have been set.");
+        }
+        return this.options.headers['Cookie'];
     }
 
 
