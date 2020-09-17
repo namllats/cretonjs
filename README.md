@@ -191,7 +191,7 @@ let creton = new Creton({
 ```
 Note: See `./examples/simpleBruteForce.js` for a practical example / use case for sticky sessions.
 
-## Validating proxies
+### Validating proxies
 To ensure the highest success rate of requests, CretonJS supports automatic proxy validation on instantiation. 
 This happens in an async manner, so until any proxies are validated, Creton will just return the next proxy in the list. 
 This will ensure that there are always requests going out.
@@ -206,5 +206,34 @@ let creton = new Creton({
 
 Note: See `./examples/validatedProxiesOnly.js` for a practical example / implementation of this functionality.
 
+## HTTP Request header manipulation
+### Adding custom HTTP headers
+
+To add custom HTTP headers to an outbound request, call the `addOrModifyHTTPHeader` function on your HTTPClient.
+This takes the header name and value as parameters. 
+
+```js
+httpClient.addOrModifyHTTPHeader('x-custom-header','abc-123');
+
+// You can add as many as you need...
+httpClient.addOrModifyHTTPHeader('authorization','abc-123-456');
+``` 
+
+Note: These headers are currently not randomized, however since all the default headers are, risk of HTTP fingerprinting is low.
+See `/examples/addingACustomHeader.js` for a practical example.
+
+### Adding custom HTTP Cookies
+
+To add custom HTTP cookies to your Creton instance, call the `addCustomHTTPCookies` function.
+This takes a string of the cookies. e.g. `"sessionID=abc-123;userID=def-456"`.
+
+```js
+let cookiesAsString = "sessionID=abc-123-456-def;userToken=fed-654-321-cba;";
+// Add the custom cookie
+httpClient.addCustomHTTPCookies(cookiesAsString);
+```
+Note: These cookies will be added on top of any others received by Creton if `stickySessions` is enabled.
+See `/examples/addCustomCookieToRequest.js` for a practical example.
+ 
 ### Examples
 See `/examples` for example code. This will be added to in order to be more comprehensive.
