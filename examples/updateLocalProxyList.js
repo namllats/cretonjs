@@ -1,13 +1,12 @@
 /**
  * This is an example bot written with the CretonJS framework.
  *
- * In this case, we will target a website with GET requests from Canada based IPs to confirm that they do in fact work.
+ * This is an example of updating the current proxy list with new proxies from the default sources.
  */
 
 const Creton = require('../index');
 
 let creton = new Creton({
-    readProxyListFromDisk: false,
     debug: true
 });
 

@@ -24,17 +24,6 @@ In the future this framework will support:
 ### Installation
 `npm install cretonjs --save`
 
-### Loading the proxy lists
-To Initialize Creton, you'll need to include the module in a file, and create a new instance of the Creton class to pull down the latest proxy lists.
-This process *must* be performed before the framework can be used.
-```js
-const Creton = require('cretonjs');
-
-let creton = new Creton({readProxyListFromDisk: false});
-
-creton.proxy.getLatestProxyLists();
-```
-
 ### Getting started
 
 To create an instance of Creton to use for your HTTP Client, instantiate the class.
@@ -192,6 +181,16 @@ let creton = new Creton({
 });
 ```
 Note: See `./examples/simpleBruteForce.js` for a practical example / use case for sticky sessions.
+
+### Pulling new proxy lists
+Upon install, Creton will pull down the latest proxy lists from the default sources. However you can refresh / update this list at any point by calling the `creton.proxy.getLatestProxyLists` function.
+```js
+const Creton = require('cretonjs');
+
+let creton = new Creton();
+
+creton.proxy.getLatestProxyLists();
+```
 
 ### Validating proxies
 To ensure the highest success rate of requests, CretonJS supports automatic proxy validation on instantiation. 
