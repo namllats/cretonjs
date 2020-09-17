@@ -190,6 +190,16 @@ class httpService {
         return this.options;
     }
 
+    addOrModifyHTTPHeader(headerName, value) {
+        if (this.options !== undefined && this.options.headers !== undefined) {
+            this.debugStatement('addOrModifyHTTPHeader', 'Adding custom header ' + headerName + ' to the HTTP headers');
+            this.options.headers[headerName] = value;
+        } else {
+            throw new Error("Do not attempt to add custom cookies before the options for a request have been set.");
+        }
+        return this.options.headers[headerName];
+    }
+
     /**
      * @param cookieString String - the cookies in string format to append. E.g. "sessionID=abc-123;userID=def-456"
      *
