@@ -5,6 +5,8 @@
  *
  * We want the highest success rate of proxies, so we will set the flag validateProxies:true when instantiating the CretonJS instance.
  *
+ * We will also randomly select proxies that have been validated, as opposed to running through linearly.
+ *
  * We will then set the requests to be made every 500 milliseconds using the setInterval function.
  */
 
@@ -15,6 +17,7 @@ let creton = new Creton({
     // validateProxies:true flag will trigger this Creton instance to test each proxy individually.
     // It will then create a new, "fresh" pool of validated proxies.
     validateProxies: true,
+    randomProxySelection: true,
     debug: true
 });
 

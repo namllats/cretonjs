@@ -14,11 +14,13 @@ class proxyService {
      *
      * @param validateProxies Bool - Whether or not the proxy list is to be validated
      */
-    constructor(filters, validateProxies, debug) {
+    constructor(filters, validateProxies, randomProxySelection, debug) {
         this.filters = filters !== undefined ? filters : undefined;
         this.validateProxies = validateProxies;
         this.proxyList = [];
         this.currentPosition = 0;
+
+        this.randomProxySelection = randomProxySelection;
 
         this.validatedProxyExists = false;
 
@@ -199,6 +201,11 @@ class proxyService {
     }
 
     fetchNextProxy() {
+        if (this.randomProxySelection === true) {
+            this.debugStatement('fetchNextProxy', 'Selecting random proxy to use.');
+            this.currentPosition = this.proxyList[Math.floor(Math.random() * this.proxyList.length)] - 1;
+        }
+
         // Test to make sure we are not at the end of the proxyList
         if (this.currentPosition < this.proxyList.length - 1) {
             this.currentPosition++;
