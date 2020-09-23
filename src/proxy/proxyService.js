@@ -185,6 +185,7 @@ class proxyService {
             let countryCode = geoip.lookup(ip).country ? geoip.lookup(ip).country : "unknown";
             let region = geoip.lookup(ip).region ? geoip.lookup(ip).region : "unknown";
             let city = geoip.lookup(ip).city ? geoip.lookup(ip).city : "unknown";
+            let latLong = geoip.lookup(ip).ll ? geoip.lookup(ip).ll : "unknown";
             let timezone = geoip.lookup(ip).timezone ? geoip.lookup(ip).timezone : "unknown";
 
 
@@ -192,6 +193,7 @@ class proxyService {
                 'country': countryCode,
                 'region': region,
                 'city': city,
+                'latLong': latLong,
                 'timezone': timezone
             };
 
