@@ -207,6 +207,21 @@ let creton = new Creton({
 
 Note: See `./examples/validatedProxiesOnly.js` for a practical example / implementation of this functionality.
 
+### Random selection of next proxy
+To avoid the exact same number of requests per IP being sent, Creton supports "random" selection of available proxies.
+
+This will create a more random distribution of requests, which will more accurately simulate a real world, highly distributed attack.
+
+To use this functionality simply add the `randomProxySelection:true` flag when instantiating an instance of Creton.
+
+```js
+let creton = new Creton({
+    randomProxySelection: true
+});
+```
+
+Note: See `./examples/validatedProxiesOnly.js` for an example of this in a real implementation.
+
 ## HTTP Request header manipulation
 ### Adding custom HTTP headers
 
