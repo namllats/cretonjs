@@ -215,7 +215,7 @@ class httpService {
         let chosenPlatform = templates[Object.keys(templates)[Math.floor(Math.random() * Object.keys(templates).length)]];
 
         // Select a random UA from the list of available
-        return chosenPlatform[Object.keys(chosenPlatform)[Math.floor(Math.random() * Object.keys(chosenPlatform).length)]];;
+        return chosenPlatform[Object.keys(chosenPlatform)[Math.floor(Math.random() * Object.keys(chosenPlatform).length)]];
     }
 
     getPreviousRequestOptions() {
