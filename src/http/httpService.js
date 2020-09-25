@@ -161,32 +161,61 @@ class httpService {
         return acceptLangs[Math.floor(Math.random() * acceptLangs.length)];
     }
 
+    /**
+     * Generates a random user agent string.
+     * Currently uses 3 basic templates. Chrome OSX, Chrome Windows, iOS Safari. Will add to this as time goes on.
+     * @returns {string}
+     */
     getRandomUserAgent() {
-        const UAs = [
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
-            "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
-            "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)",
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1",
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/69.0.3497.105 Mobile/15E148 Safari/605.1",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101 Firefox/80.0",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/13.2b11866 Mobile/16A366 Safari/605.1.15",
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A5370a Safari/604.1",
-            "Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Microsoft; RM-1127_16056) AppleWebKit/537.36(KHTML, like Gecko) Chrome/42.0.2311.135 Mobile Safari/537.36 Edge/12.10536",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36 Edg/84.0.522.50",
-            "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36 Edg/84.0.522.48",
-            "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16294",
-            "Mozilla/5.0 (Linux; Android 10; SM-A205G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.111 Mobile Safari/537.36",
-            "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.26 Safari/537.36",
-            "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/49.0",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.3497.100 Safari/537.36"
-        ];
 
-        return UAs[Math.floor(Math.random() * UAs.length)];
+        let generateVersionNumber = function (length) {
+            // Hacky but works well enough...
+            return Math.floor(Math.random() * 10000000000 + 1).toString().slice(0, length)
+        }
+
+        let chooseItemFromArray = function (array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        let generatedBrowserData = {
+            IOS_VERSION: [`${chooseItemFromArray(['10', '11', '12', '13', '14'])}_${generateVersionNumber(1)}`],
+            SAFARI_BUILD_IDS: ['15E148', '15A5370a', '16A366'],
+            SAFARI_IOS_VERSIONS: [`${chooseItemFromArray(['10', '11', '12', '13', '14'])}.${generateVersionNumber(1)}.${generateVersionNumber(1)}`],
+            WEBKIT_VERSION: ["537.36", `60${chooseItemFromArray(['4', '5'])}.1.${generateVersionNumber(2)}`],
+            CHROME_VERSION: [`${chooseItemFromArray(['80', '81', '82', '83', '84', '85'])}.0.${generateVersionNumber(4)}.${generateVersionNumber(3)}`],
+            SAFARI_VERSION: [`60${chooseItemFromArray(['4', '5'])}.1`, `537.36`],
+            WINDOWS_VERSION: ['10.0', '6.1', '6.2', '6.3'],
+            MAC_OSX_VERSION: [`${chooseItemFromArray(['8', '9', '10'])}_${generateVersionNumber(2)}_${generateVersionNumber(1)}`]
+
+        }
+
+        let templates = {
+            desktop: {
+                windowsChrome: `Mozilla/5.0 (Windows NT ${chooseItemFromArray(generatedBrowserData.WINDOWS_VERSION)}; Win64; x64)` +
+                    ` AppleWebKit/${chooseItemFromArray(generatedBrowserData.WEBKIT_VERSION)}` +
+                    ` Chrome/${chooseItemFromArray(generatedBrowserData.CHROME_VERSION)}` +
+                    ` Safari/${chooseItemFromArray(generatedBrowserData.SAFARI_VERSION)}`
+                ,
+
+                macOSXChrome: `Mozilla/5.0 (Macintosh; Intel Mac OS X ${chooseItemFromArray(generatedBrowserData.MAC_OSX_VERSION)})` +
+                    ` AppleWebKit/${chooseItemFromArray(generatedBrowserData.WEBKIT_VERSION)}` +
+                    ` (KHTML, like Gecko) Chrome/${chooseItemFromArray(generatedBrowserData.CHROME_VERSION)}` +
+                    ` Safari/${chooseItemFromArray(generatedBrowserData.SAFARI_VERSION)}`
+            },
+            mobile: {
+                iOSSafari: `Mozilla/5.0 (iPhone; CPU iPhone OS ${chooseItemFromArray(generatedBrowserData.IOS_VERSION)} like Mac OS X)` +
+                    ` AppleWebKit/${chooseItemFromArray(generatedBrowserData.WEBKIT_VERSION)} (KHTML, like Gecko)` +
+                    ` Version/${chooseItemFromArray(generatedBrowserData.SAFARI_IOS_VERSIONS)}` +
+                    ` Mobile/${chooseItemFromArray(generatedBrowserData.SAFARI_BUILD_IDS)}` +
+                    ` Safari/${chooseItemFromArray(generatedBrowserData.SAFARI_VERSION)}`
+            }
+        };
+
+        // Randomly select the platform
+        let chosenPlatform = templates[Object.keys(templates)[Math.floor(Math.random() * Object.keys(templates).length)]];
+
+        // Select a random UA from the list of available
+        return chosenPlatform[Object.keys(chosenPlatform)[Math.floor(Math.random() * Object.keys(chosenPlatform).length)]];;
     }
 
     getPreviousRequestOptions() {
