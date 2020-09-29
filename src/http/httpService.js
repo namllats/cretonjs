@@ -168,6 +168,10 @@ class httpService {
      */
     getRandomUserAgent() {
 
+        let generateNumberBetweenTwoNumbers = function (min, max) {
+            return Math.floor(Math.random() * max) + min;
+        }
+
         let generateVersionNumber = function (length) {
             // Hacky but works well enough...
             return Math.floor(Math.random() * 10000000000 + 1).toString().slice(0, length)
@@ -185,7 +189,7 @@ class httpService {
             CHROME_VERSION: [`${chooseItemFromArray(['80', '81', '82', '83', '84', '85'])}.0.${generateVersionNumber(4)}.${generateVersionNumber(3)}`],
             SAFARI_VERSION: [`60${chooseItemFromArray(['4', '5'])}.1`, `537.36`],
             WINDOWS_VERSION: ['10.0', '6.1', '6.2', '6.3'],
-            MAC_OSX_VERSION: [`${chooseItemFromArray(['8', '9', '10'])}_${generateVersionNumber(2)}_${generateVersionNumber(1)}`]
+            MAC_OSX_VERSION: [`${chooseItemFromArray(['8', '9', '10'])}_${generateNumberBetweenTwoNumbers(6, 13)}_${generateVersionNumber(1)}`]
 
         }
 
