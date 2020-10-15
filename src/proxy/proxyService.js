@@ -142,7 +142,9 @@ class proxyService {
 
         // Read in the list of proxies from the text file and split by new line into array
         let rawProxyList = fs.readFileSync(pathToProxyList).toString().split(/\n/g);
-        let emptyProxyList = [];
+        let mainProxyList = [];
+
+        let secondaryProxyList = [];
 
         this.debugStatement('loadProxyList', 'Read ' + rawProxyList.length + ' proxies in from disk.');
 
@@ -159,14 +161,19 @@ class proxyService {
 
             // Test new IP against the current filters
             if (this.testProxyAgainstFilter(newProxyGeoData) && newProxyObject.address !== "") {
-                emptyProxyList.push(newProxyObject);
+                mainProxyList.push(newProxyObject);
+            } else if (this.testProxyAgainstFilter(newProxyGeoData) === false && newProxyObject.address !== "") {
+                // Add proxy to secondary list if it does not match filters.. To be used in future versions...
+                secondaryProxyList.push(newProxyObject);
             }
 
         }
 
-        this.debugStatement('loadProxyList', 'Loaded ' + emptyProxyList.length + ' proxies.');
-        this.proxyList = emptyProxyList;
-        return emptyProxyList;
+        this.debugStatement('loadProxyList', 'Loaded ' + mainProxyList.length + ' proxies.');
+        this.proxyList = mainProxyList;
+        this.secondaryProxyList = secondaryProxyList;
+
+        return mainProxyList;
     }
 
     testProxyAgainstFilter(geoData) {
