@@ -1,0 +1,37 @@
+{
+  "name": "cretonjs",
+  "version": "1.0.16",
+  "description": "CretonJS is an HTTP abstraction layer for creating custom NodeJS HTTP clients when performing red teaming / penetration testing to accurately test defenses.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node src/helpers/postinstall.js"
+  },
+  "keywords": [
+    "bot",
+    "http",
+    "script",
+    "proxy",
+    "security",
+    "tool",
+    "advanced",
+    "attack",
+    "robot",
+    "hacking",
+    "red team",
+    "request",
+    "http"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/namllats/cretonjs"
+  },
+  "homepage": "https://github.com/namllats/cretonjs",
+  "author": "namllats",
+  "license": "ISC",
+  "dependencies": {
+    "geoip-lite": "^1.3.2",
+    "https-proxy-agent": "^5.0.0",
+    "promise": "^8.1.0",
+    "request": "^2.88.2"
+  }
+}

@@ -1,0 +1,6 @@
+/node_modules/*
+.idea/*
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+src/proxy/proxies.txt
