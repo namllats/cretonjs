@@ -310,6 +310,30 @@ class proxyService {
         }
     }
 
+    /**
+     * This function enables you to access the current list of proxies that your Creton instance will be using.
+     * This will return an object that contains two arrays, one for "unverified" proxies and one for "verified" proxies
+     *
+     * return {Object} => verified: [], unverified: []
+     */
+    getListOfProxies() {
+
+        let proxyList = {
+            verified: [],
+            unverified: []
+        };
+
+        for (let proxyID in this.proxyList) {
+            let currentProxy = this.proxyList[proxyID];
+            if (currentProxy.hasBeenTested === true && currentProxy.isWorking === true) {
+                proxyList.verified.push(currentProxy);
+            } else {
+                proxyList.unverified.push(currentProxy);
+            }
+        }
+
+        return proxyList;
+    }
 
     debugStatement(fn, message) {
         if (this.debug === true) {

@@ -26,6 +26,10 @@ class Creton {
         return new this.httpClient(nextProxyAddress, this.config.stickySessions, this.config.debug);
     }
 
+    getCurrentProxyList() {
+        return this.proxy.getListOfProxies();
+    }
+
 }
 
 module.exports = Creton;
