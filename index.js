@@ -7,7 +7,8 @@ class Creton {
         // Init config
         this.config = config;
         // Init proxy service
-        this.proxy = new proxyService(this.config.proxyFilters, this.config.validateProxies, this.config.randomProxySelection, this.config.debug);
+        this.proxy = new proxyService(this.config.proxyFilters, this.config.validateProxies,
+            this.config.randomProxySelection, this.config.debug);
 
         // Do not perform this if flag is false. This occurs on init run to collect local proxies
         this.proxy.loadProxyList(this.config.proxyListPath);
