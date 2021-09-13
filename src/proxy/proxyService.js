@@ -267,7 +267,7 @@ class proxyService {
             // Setup the HTTP client with the new proxy info
             let httpClient = new HTTPService(proxyDetails.address, false, 'false');
 
-            let urlToRequest = endpointAndMethodToTest.secure === true ? 'https' + endpointAndMethodToTest.endpoint : 'http' + endpointAndMethodToTest.endpoint;
+            let urlToRequest = endpointAndMethodToTest.secure === true ? 'https://' + endpointAndMethodToTest.endpoint : 'http://' + endpointAndMethodToTest.endpoint;
 
             httpClient.setOptionsForFirstRequest(urlToRequest, endpointAndMethodToTest.method);
 
