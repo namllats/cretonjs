@@ -269,7 +269,7 @@ class proxyService {
 
             let urlToRequest = endpointAndMethodToTest.secure === true ? 'https' + endpointAndMethodToTest.endpoint : 'http' + endpointAndMethodToTest.endpoint;
 
-            httpClient.setOptionsForFirstRequest("http://www.example.com/", endpointAndMethodToTest.method);
+            httpClient.setOptionsForFirstRequest(urlToRequest, endpointAndMethodToTest.method);
 
             // write the data into the http client to be used at validation post response
             httpClient.JSONDataStore.set('proxyPos', proxy);
